@@ -1,0 +1,33 @@
+name: Run tests and generate reports
+run-name: Run tests and generate coverage reports
+
+on:
+  push:
+    branches:
+      - developpe
+    paths:
+      - 'back/**'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'back/**'
+jobs:
+  build-and-test-back-witch-coverage:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup Java
+      uses: actions/setup-java@v4
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+    - name: Build and Test API Reservation
+      run: |
+        mvn -B package --file back/pom.xml
+        mvn test --file back/pom.xml
+    - name: Upload backend(JaCoCo) coverage report
+      uses: actions/upload-artifact@v4
+      with:
+          name: back-coverage-report
+          path: back/target/site/jacoco/
