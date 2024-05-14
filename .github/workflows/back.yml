@@ -1,5 +1,4 @@
-name: Run tests and generate reports
-run-name: Run tests and generate coverage reports
+name: back CI/CD Workflow
 
 on:
   push:
