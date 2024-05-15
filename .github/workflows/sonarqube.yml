@@ -26,7 +26,17 @@
 
 name: SonarQube Analysis
 
-on: [push, pull_request]
+on: 
+  push:
+    branches: 
+      - developpe
+    paths:
+      - 'back/**'
+  pull_request:
+    branches: 
+      - main
+    paths:
+      - 'back/**'
 
 jobs:
   sonarqube_scan:
@@ -34,10 +44,10 @@ jobs:
     runs-on: [self-hosted, sonar-local-runner]
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-
 
       - name: Set up Java
         uses: actions/setup-java@v2
@@ -46,7 +56,6 @@ jobs:
 
       - name: Run SonarQube Scanner
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=ci-cd -Dsonar.projectName='ci-cd'
-
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
