@@ -42,7 +42,7 @@ jobs:
         cp -r back/target/site/jacoco/* ./coverage-repport/back
         git add ./coverage-repport/back
         git commit -m "Update Coverage Reports"
-        git push origin eveloppe
+        git push origin developpe
     env:
      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   
