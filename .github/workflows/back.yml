@@ -38,8 +38,8 @@ jobs:
         git config --global user.name "GitHub Actions"
         git fetch
         git checkout -b coverage-reports
-        cp -r back/target/site/jacoco/* ./coverage-reports/
-        git add ./coverage-reports
+        cp -r back/target/site/jacoco/* ./coverage-repport/back
+        git add ./coverage-repport/back
         git commit -m "Update Coverage Reports"
         git push origin coverage-reports
     env:
