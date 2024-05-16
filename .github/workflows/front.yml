@@ -66,7 +66,7 @@ jobs:
       - name: Install SonarQube Scanner
         run: npm install -g sonarqube-scanner
       - name: Run SonarQube Scanner
-        run:   sonar-scanner    -Dsonar.typescript.lcov.reportPaths=coverage/lcov.info \ -Dsonar.projectKey=ci-cd -Dsonar.projectName='ci-cd' --file back/pom.xml
+        run:   sonar-scanner    -Dsonar.typescript.lcov.reportPaths=coverage/lcov.info \ -Dsonar.projectKey=ci-cd -Dsonar.projectName='ci-cd' --file front/package.json
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
