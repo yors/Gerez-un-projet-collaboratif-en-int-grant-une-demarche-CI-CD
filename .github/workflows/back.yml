@@ -37,7 +37,7 @@ jobs:
         git config --global user.email "your-email@example.com"
         git config --global user.name "GitHub Actions"
         git fetch
-        git checkout -b coverage-reports
+        git checkout  coverage-reports
         git pull origin coverage-reports
         cp -r back/target/site/jacoco/* ./coverage-repport/back
         git add ./coverage-repport/back
