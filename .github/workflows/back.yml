@@ -38,7 +38,7 @@ jobs:
         git config --global user.name "GitHub Actions"
         git fetch
         git pull origin developpe
-        mkdir coverage-repport/back
+        mkdir -p coverage-repport/back
         cp -r back/target/site/jacoco/* ./coverage-repport/back
         git add ./coverage-repport/back
         git commit -m "Update Coverage Reports"
