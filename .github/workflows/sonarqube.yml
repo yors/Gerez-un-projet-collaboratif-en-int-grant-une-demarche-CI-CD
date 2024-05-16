@@ -41,7 +41,7 @@ on:
 jobs:
   sonarqube_scan:
     name: Run SonarQube Scanner
-    runs-on: [self-hosted, sonar-local-runner]
+    runs-on: [self-hosted, macOS, X64]
 
     steps:
       - name: Checkout code
