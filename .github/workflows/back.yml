@@ -66,5 +66,5 @@ jobs:
       - name: Run SonarQube Scanner
         run: mvn clean compile org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=test -Dsonar.projectName='test' --file back/pom.xml
         env:
-          SONAR_TOKEN: sqp_f7734a4568c0f0c58a0ec5af736e441891854999
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
