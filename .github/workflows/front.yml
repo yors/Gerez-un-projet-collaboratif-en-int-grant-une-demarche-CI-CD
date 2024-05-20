@@ -40,12 +40,12 @@ jobs:
         git config --global user.email "mvouyorick@gmail.com"
         git config --global user.name "GitHub Actions"
         git fetch
-        git pull origin developpe
+        git pull origin 
         mkdir -p coverage-repport/front
         cp -r front/coverage/bobapp/* ./coverage-repport/front
         git add ./coverage-repport/front
         git commit -m "Update Coverage Reports"
-        git push origin developpe
+        git push origin 
     env:
      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   sonarqube_scan:
