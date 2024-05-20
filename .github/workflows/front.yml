@@ -20,7 +20,7 @@ jobs:
     - name: Setup Node for Web project
       uses: actions/setup-node@v4
       with:
-        node-version: '20'
+        node-version: '16'
         cache: 'npm'
         cache-dependency-path: front/package-lock.json
     - name: Install dependencies for front project
@@ -62,7 +62,7 @@ jobs:
       - name: Setup Node for Web project
         uses: actions/setup-node@v4
         with:
-         node-version: '20'
+         node-version: '16'
       - name: Install SonarQube Scanner
         run: npm install -g sonarqube-scanner
       - name: Run SonarQube Scanner
