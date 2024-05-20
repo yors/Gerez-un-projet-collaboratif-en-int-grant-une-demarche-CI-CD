@@ -36,11 +36,13 @@ jobs:
       run: |
         git config --global user.email "mvouyorick@gmail.com"
         git config --global user.name "GitHub Actions"
+        git fetch
+        git pull origin coverage-reports
         mkdir -p coverage-repport/back
         cp -r back/target/site/jacoco/* ./coverage-repport/back
         git add ./coverage-repport/back
         git commit -m "Update Coverage Reports"
-        git push origin
+        git push origin coverage-reports
     env:
      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   
