@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.openclassrooms.bobapp.model.Joke;
 import com.openclassrooms.bobapp.service.JokeService;
+import com.openclassrooms.bobapp.model.Joke;
+
 
 @RestController
 @RequestMapping("api/joke")
@@ -18,7 +20,7 @@ public class JokeController {
     }
 
     @GetMapping()
-    public ResponseEntity<?> getRandomJokes() {
-        return ResponseEntity.ok(this.jokeService.getRandomJoke());
+    public Joke getRandomJokes() {
+        return this.jokeService.getRandomJoke();
     }
 }

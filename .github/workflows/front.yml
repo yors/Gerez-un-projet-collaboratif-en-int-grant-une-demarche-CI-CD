@@ -34,9 +34,45 @@ jobs:
     - name: Run test with coverage
       working-directory: front
       run: npm run test -- --code-coverage --browsers=ChromeHeadless --watch=false
+      
+    - name: Commit Coverage Report
+      run: |
+        git config --global user.email "mvouyorick@gmail.com"
+        git config --global user.name "GitHub Actions"
+        git fetch --all
+        git checkout coverage-reports
+        git pull origin coverage-reports
+        mkdir -p coverage-repport/front
+        cp -r front/coverage/bobapp/* ./coverage-repport/front
+        git add ./coverage-repport/front
+        git commit -m "Update Coverage Reports"
+        git push origin coverage-reports
+    env:
+     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  sonarqube_scan:
+    name: Run SonarQube Scanner
+    needs: build-and-test-web-with-coverage
+    runs-on: [self-hosted, macOS, X64]
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
 
-    - name: Upload frontend coverage results
-      uses: actions/upload-artifact@v4
-      with:
-          name: front-coverage-report
-          path: front/coverage/bobapp/
+      - name: Setup Node for Web project
+        uses: actions/setup-node@v4
+        with:
+         node-version: '20'
+   
+      - name: Run SonarQube Scanner
+        run: |
+          sonar-scanner \
+          -Dsonar.projectKey=ci-cd \
+          -Dsonar.projectName='ci-cd' \
+          -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+        working-directory: front
+        env:
+           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
