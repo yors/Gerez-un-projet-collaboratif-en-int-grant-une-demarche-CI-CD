@@ -39,6 +39,7 @@ jobs:
       run: |
         git config --global user.email "mvouyorick@gmail.com"
         git config --global user.name "GitHub Actions"
+        git fetch --all
         git checkout coverage-reports
         git pull origin coverage-reports
         mkdir -p coverage-repport/front
