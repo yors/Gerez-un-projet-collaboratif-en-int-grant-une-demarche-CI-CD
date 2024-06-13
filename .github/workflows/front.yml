@@ -37,16 +37,16 @@ jobs:
       
     - name: Commit Coverage Report
       run: |
-        git config --global user.email "mvouyorick@gmail.com"
-        git config --global user.name "GitHub Actions"
+        git config user.name "GitHub Actions Bot"
+        git config user.email "<>"
         git fetch --all
-        git checkout coverage-reports
-        git pull origin coverage-reports
-        mkdir -p coverage-repport/front
-        cp -r front/coverage/bobapp/* ./coverage-repport/front
-        git add ./coverage-repport/front
-        git commit -m "Update Coverage Reports"
-        git push origin coverage-reports
+        git checkout report
+        git pull origin report
+        mkdir -p report/front
+        cp -r front/coverage/bobapp/* ./report/front/
+        git add ./report/front/
+        git commit -m "[Front] Report ${{ github.event.repository.updated_at}}"
+        git push origin report
     env:
      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   sonarqube_scan:
