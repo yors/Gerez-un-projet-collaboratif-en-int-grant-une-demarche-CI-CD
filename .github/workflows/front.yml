@@ -5,12 +5,12 @@ on:
     branches: 
       - developpe
     paths:
-      - 'front/**'
+      - 'fronts/**'
   pull_request:
     branches: 
       - main
     paths:
-      - 'front/**'
+      - 'fronts/**'
 
 jobs:
   build-and-test-web-with-coverage:
