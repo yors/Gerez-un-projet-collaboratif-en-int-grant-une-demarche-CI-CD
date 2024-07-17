@@ -5,12 +5,12 @@ on:
     branches:
       - developpe
     paths:
-      - 'back/**'
+      - 'backs/**'
   pull_request:
     branches:
       - main
     paths:
-      - 'back/**'
+      - 'backs/**'
 jobs:
   build-and-test-back-witch-coverage:
     runs-on: ubuntu-latest
