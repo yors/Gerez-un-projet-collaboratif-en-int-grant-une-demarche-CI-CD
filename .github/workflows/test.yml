@@ -54,7 +54,7 @@ jobs:
 
       - name: Install frontend dependencies and run tests
         working-directory: ./front
-        run: npm install && npm test -- --watch=false --code-coverage --browsers=ChromeHeadlessCI
+        run: npm install && npm test -- --watch=false --code-coverage --browsers=ChromeHeadless
 
       - name: Build and verify backend with Maven
         working-directory: ./back
