@@ -5,12 +5,12 @@ on:
     branches:
       - developpe
     paths:
-      - 'back/**'
+      - 'backs/**'
   pull_request:
     branches:
       - main
     paths:
-      - 'back/**'
+      - 'backs/**'
 jobs:
   build-and-test-back-witch-coverage:
     runs-on: ubuntu-latest
@@ -64,7 +64,7 @@ jobs:
           java-version: '17'  # Ensure Java 11 is used for SonarQube
           
       - name: Run SonarQube Scanner
-        run: mvn clean compile org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=ci-cd -Dsonar.projectName='ci-cd' --file back/pom.xml
+        run: mvn clean compile org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=test -Dsonar.projectName='test' --file back/pom.xml
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}

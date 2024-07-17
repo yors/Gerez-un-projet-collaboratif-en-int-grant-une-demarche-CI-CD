@@ -5,12 +5,12 @@ on:
     branches: 
       - developpe
     paths:
-      - 'front/**'
+      - 'fronts/**'
   pull_request:
     branches: 
       - main
     paths:
-      - 'front/**'
+      - 'fronts/**'
 
 jobs:
   build-and-test-web-with-coverage:
@@ -37,42 +37,15 @@ jobs:
       
     - name: Commit Coverage Report
       run: |
-        git config --global user.email "mvouyorick@gmail.com"
-        git config --global user.name "GitHub Actions"
+        git config user.name "GitHub Actions Bot"
+        git config user.email "<>"
         git fetch --all
-        git checkout coverage-reports
-        git pull origin coverage-reports
-        mkdir -p coverage-repport/front
-        cp -r front/coverage/bobapp/* ./coverage-repport/front
-        git add ./coverage-repport/front
-        git commit -m "Update Coverage Reports"
-        git push origin coverage-reports
+        git checkout report
+        git pull origin report
+        mkdir -p report/front
+        cp -r front/coverage/bobapp/* ./report/front/
+        git add ./report/front/
+        git commit -m "[Front] Report ${{ github.event.repository.updated_at}}"
+        git push origin report
     env:
      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  sonarqube_scan:
-    name: Run SonarQube Scanner
-    needs: build-and-test-web-with-coverage
-    runs-on: [self-hosted, macOS, X64]
-    
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-
-      - name: Setup Node for Web project
-        uses: actions/setup-node@v4
-        with:
-         node-version: '20'
-   
-      - name: Run SonarQube Scanner
-        run: |
-          sonar-scanner \
-          -Dsonar.projectKey=ci-cd \
-          -Dsonar.projectName='ci-cd' \
-          -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
-        working-directory: front
-        env:
-           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
