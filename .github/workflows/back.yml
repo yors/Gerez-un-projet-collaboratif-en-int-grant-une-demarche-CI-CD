@@ -44,8 +44,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: e838734b2cb0aab1c28a7d0666252da23493052a
-      run: mvn clean compile org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=yors-org_Gerez-un-projet-collaboratif-en-int-grant-une-demarche-CI-CD -Dsonar.projectName='yors-org_Gerez-un-projet-collaboratif-en-int-grant-une-demarche-CI-CD' --file back/pom.xml
-      working-directory: back
+      run: mvn -B clean compile org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=yors-org_Gerez-un-projet-collaboratif-en-int-grant-une-demarche-CI-CD -f pom.xml
 
     - uses: actions/upload-artifact@v3  
       with:
