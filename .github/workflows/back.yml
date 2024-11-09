@@ -3,10 +3,10 @@ name: Backend Workflow
 on:
   push:
     branches: 
-      - CI-CD-P10
+      - main
   pull_request:
     branches: 
-      - CI-CD-P10
+      - main
 
 jobs:
   BackEnd:
