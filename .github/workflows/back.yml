@@ -43,8 +43,8 @@ jobs:
     - name: Build and analyze
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_BACK }}
-      run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=mydmoov_sonarcloud-p10-back -f pom.xml
+        SONAR_TOKEN: e838734b2cb0aab1c28a7d0666252da23493052a
+      run: mvn clean compile org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=yors-org_Gerez-un-projet-collaboratif-en-int-grant-une-demarche-CI-CD -Dsonar.projectName='yors-org_Gerez-un-projet-collaboratif-en-int-grant-une-demarche-CI-CD' --file back/pom.xml
       working-directory: back
 
     - uses: actions/upload-artifact@v3  
