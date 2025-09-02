@@ -1,0 +1,55 @@
+name: CI Workflow Front
+
+on:
+  push:
+    branches: [ "feature/*", "release/*", "hotfix/*", "develop" ]
+    paths: [ 'front/**', '.github/workflows/**' ]
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [ main ]
+
+jobs:
+
+  test-sonar:
+    name: Frontend - Tests & Coverage
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.15.1'
+
+      - name: Cache Node.js modules
+        uses: actions/cache@v4                          # Speed up npm install
+        with:
+          path: front/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('front/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: front
+
+      - name: Run Angular tests with coverage
+        run: npm run test
+        working-directory: front
+
+      - name: Upload Angular coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: angular-coverage
+          path: front/coverage
+
+      - name: SonarCloud Scan - Front
+        uses: SonarSource/sonarcloud-github-action@v2
+        with:
+          projectBaseDir: ./front
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_FRONT }}
+
