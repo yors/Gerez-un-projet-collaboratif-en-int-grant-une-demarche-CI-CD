@@ -2,7 +2,7 @@ name: CI Workflow Back
 
 on:
   push:
-    branches: [ "feature/*", "release/*", "hotfix/*", "develop" ]
+    branches: [ "feature/*", "release/*", "hotfix/*", "develop","main" ]
     paths: [ 'back/**', '.github/workflows/**' ]
   pull_request:
     types: [opened, synchronize, reopened]
