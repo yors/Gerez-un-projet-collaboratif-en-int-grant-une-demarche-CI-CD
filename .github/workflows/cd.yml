@@ -1,28 +1,27 @@
 name: Docker Build & Push
 
 on:
-  workflow_run:
-    workflows: ["CI Workflow Back", "CI Workflow Front"]
-    types:
-      - completed
+  push:
+    branches: [ main ]
 
 concurrency:
-  group: cd-back-${{ github.event.workflow_run.head_branch }}
+  group: cd-main
   cancel-in-progress: true
 
 jobs:
   build-push:
     name: Build & Push Docker Images
     runs-on: ubuntu-latest
-    if: >
-      ${{
-        github.event.workflow_run.conclusion == 'success' &&
-        github.event.workflow_run.event == 'push' &&
-        github.event.workflow_run.head_branch == 'main'
-      }}
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
@@ -32,12 +31,26 @@ jobs:
 
       # Backend
       - name: Build & Push Backend
-        run: |
-          docker build -t yoricklio/bobapp-back:latest ./back
-          docker push yoricklio/bobapp-back:latest
+        uses: docker/build-push-action@v5
+        with:
+          context: ./back
+          push: true
+          tags: 
+            yoricklio/bobapp-back:${{ github.sha }}
+            yoricklio/bobapp-back:main
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          platforms: linux/amd64
 
       # Frontend
       - name: Build & Push Frontend
-        run: |
-          docker build -t yoricklio/bobapp-front:latest ./front
-          docker push yoricklio/bobapp-front:latest
+        uses: docker/build-push-action@v5
+        with:
+          context: ./front
+          push: true
+          tags:
+            yoricklio/bobapp-front:${{ github.sha }}
+            yoricklio/bobapp-front:main
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          platforms: linux/amd64

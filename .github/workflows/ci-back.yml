@@ -12,6 +12,8 @@ jobs:
   tests-sonar:
     name: Backend - Tests & Coverage
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
 
     steps:
       - name: Checkout code
@@ -26,15 +28,15 @@ jobs:
           distribution: 'temurin'
 
       - name: Cache Maven packages
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          key: ${{ runner.os }}-maven-${{ hashFiles('back/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven
             
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
@@ -45,7 +47,7 @@ jobs:
         working-directory: back
 
       - name: SonarCloud Scan - Back
-        uses: SonarSource/sonarcloud-github-action@v2
+        uses: SonarSource/sonarcloud-github-action@v3
         with:
          projectBaseDir: ./back
         env:
