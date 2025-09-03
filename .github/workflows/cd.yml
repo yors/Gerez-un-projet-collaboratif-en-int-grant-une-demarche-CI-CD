@@ -12,8 +12,8 @@ jobs:
   build-push:
     name: Build & Push Docker Images
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    
+    permissions:
+      contents: read  
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -35,7 +35,7 @@ jobs:
         with:
           context: ./back
           push: true
-          tags: 
+          tags: |
             yoricklio/bobapp-back:${{ github.sha }}
             yoricklio/bobapp-back:main
           cache-from: type=gha
@@ -48,7 +48,7 @@ jobs:
         with:
           context: ./front
           push: true
-          tags:
+          tags: |
             yoricklio/bobapp-front:${{ github.sha }}
             yoricklio/bobapp-front:main
           cache-from: type=gha
